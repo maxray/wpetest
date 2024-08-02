@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   js-build:
     runs-on: ubuntu-latest
@@ -43,7 +44,6 @@ jobs:
 
   php-build:
     runs-on: ubuntu-latest
-    container: gjrdiesel/composer-80:alpine
     steps:
 
     - name: Check out the git repo
@@ -53,6 +53,9 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: 8.2
+
+    - name: Check PHP version
+      run: php -v
 
     - name: Run composer install in theme directory
       run: cd wp-content/themes/${{ env.THEME_NAME }} && composer install && cd -
