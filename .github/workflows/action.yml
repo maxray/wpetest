@@ -60,6 +60,16 @@ jobs:
     - name: Run composer install in theme directory
       run: cd wp-content/themes/${{ env.THEME_NAME }} && composer install && cd -
 
+    - name: Set up SSH
+      run: |
+        echo "$WPE_SSHG_KEY_PRIVATE" > /tmp/wpengine_key
+        chmod 600 /tmp/wpengine_key
+        mkdir -p ~/.ssh
+        echo "Host crayfieldsstg.ssh.wpengine.net" > ~/.ssh/config
+        echo "  User crayfieldsstg" >> ~/.ssh/config
+        echo "  IdentityFile /tmp/wpengine_key" >> ~/.ssh/config
+        echo "  IdentitiesOnly yes" >> ~/.ssh/config
+
     - name: Deploy to wpengine.com
       uses: wpengine/github-action-wpe-site-deploy@v3
       with:
