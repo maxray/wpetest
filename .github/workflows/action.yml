@@ -60,7 +60,8 @@ jobs:
     - name: Run composer install in theme directory
       run: cd wp-content/themes/${{ env.THEME_NAME }} && composer install && cd -
 
-    
+    - name: Install Acorn
+      run: cd wp-content/themes/${{ env.THEME_NAME }} && composer require roots/acorn
 
     - name: Deploy to wpengine.com
       uses: wpengine/github-action-wpe-site-deploy@v3
